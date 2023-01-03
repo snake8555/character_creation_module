@@ -98,4 +98,4 @@ if __name__ == '__main__':
     print(start_training(char_name, char_class))
 
 
-main()
+#main()
