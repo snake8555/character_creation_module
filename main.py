@@ -24,11 +24,11 @@ class Character():
 
     def defence(self) -> str:
         value_defence = DEFAULT_DEFENCE + randint(*self.RANGE_VALUE_DEFENCE)
-        return (f'{self.name} блокировал {value_defence} едю урона')
+        return (f'{self.name} блокировал {value_defence} ед. урона')
 
     def special(self) -> str:
         return (f'{self.name} применил специальное умение '
-                f'"{self.SPECIAL_SKILL}{self.SPECIAL_BUFF}"')
+                f'"{self.SPECIAL_SKILL}" {self.SPECIAL_BUFF} ед. урона')
 
     def __str__(self) -> str:
         return f'{self.__class__.__name__} - {self.BRIEF_DESC_CHAR_CLASS}.'
@@ -61,17 +61,17 @@ class Healer(Character):
     SPECIAL_SKILL = 'Защита'
 
 
-def start_training(char_class: Character) -> str:
+def start_training(character) -> str:
     """
     Принимает на вход имя и класс персонажа.
     Возвращает сообщения о результатах цикла тренировки персонажа.
     """
-    training = {
-        Warrior: char_class.BRIEF_DESC_CHAR_CLASS,
-        Mage: char_class.BRIEF_DESC_CHAR_CLASS,
-        Healer: char_class.BRIEF_DESC_CHAR_CLASS
+    commands = {
+        'attack': character.attack,
+        'defence': character.defence,
+        'special': character.special,
     }
-    print(training[char_class])
+
     print('Потренируйся управлять своими навыками.')
     print('Введи одну из команд: attack — чтобы атаковать противника, '
           'defence — чтобы блокировать атаку противника или '
@@ -80,12 +80,15 @@ def start_training(char_class: Character) -> str:
     cmd = None
     while cmd != 'skip':
         cmd = input('Введи команду: ')
+        if cmd in commands:
+            print(commands[cmd]())
         # Вместо блока условных операторов добавьте условие
         # принадлежности введённой команды словарю.
         # В функции print() будет вызываться метод класса,
         # который соответствует введённой команде.
-        
+
     return 'Тренировка окончена.'
+
 
 def choice_char_class(char_name: str) -> Character:
     game_classes = {
@@ -105,4 +108,4 @@ def choice_char_class(char_name: str) -> Character:
         approve_choice = input('Нажми (Y), чтобы подтвердить выбор, '
                                'или любую другую кнопку, '
                                'чтобы выбрать другого персонажа ').lower()
-    return start_training(char_class)
+    start_training(char_class)
