@@ -1,3 +1,11 @@
+#backup main.py
+main_bk.py
+test1.py
+venv1
+.vscode
+LICENCE
+README.md
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
